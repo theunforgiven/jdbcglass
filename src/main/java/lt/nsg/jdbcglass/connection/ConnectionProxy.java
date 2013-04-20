@@ -1,4 +1,4 @@
-package lt.nsg.jdbcglass;
+package lt.nsg.jdbcglass.connection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,132 +7,119 @@ import java.sql.*;
 
 public class ConnectionProxy extends AbstractConnectionProxy {
     private final Logger log = LoggerFactory.getLogger(ConnectionProxy.class);
+    private final ConnectionHelper connectionHelper;
 
     public ConnectionProxy(Connection connection) {
         super(connection);
-        log.info("Connection opened");
+        this.connectionHelper = new ConnectionHelper(this);
+        connectionHelper.logConnectionOpened(log);
     }
 
     @Override
     public void close() throws SQLException {
         getConnection().close();
-        log.info("Connection closed");
+        connectionHelper.logConnectionClosed(log);
     }
 
     @Override
     public Statement createStatement() throws SQLException {
-        return proxyStatement(getConnection().createStatement());
+        return connectionHelper.proxyStatement(getConnection().createStatement());
     }
 
     @Override
     public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
         Statement statement = getConnection().createStatement(resultSetType, resultSetConcurrency);
-        return proxyStatement(statement);
+        return connectionHelper.proxyStatement(statement);
     }
 
     @Override
     public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
         Statement statement = getConnection().createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
-        return proxyStatement(statement);
-    }
-
-    private Statement proxyStatement(Statement statement) throws SQLException {
-        return new StatementProxy(statement, this);
+        return connectionHelper.proxyStatement(statement);
     }
 
     @Override
     public void setAutoCommit(boolean autoCommit) throws SQLException {
-        boolean previousAutoCommit = getCurrentAutoCommit();
+        boolean previousAutoCommit = getConnection().getAutoCommit();
         getConnection().setAutoCommit(autoCommit);
-        if (previousAutoCommit && !autoCommit) {
-            log.info("Transaction committed");
-        } else if (!previousAutoCommit && autoCommit) {
-            log.info("Transaction started");
-        }
+        connectionHelper.logAutoCommitChanged(log, autoCommit, previousAutoCommit);
     }
 
     @Override
     public void rollback() throws SQLException {
         getConnection().rollback();
-        log.info("Transaction rolledback");
+        connectionHelper.logTransactionRolledback(log);
     }
 
     @Override
     public void rollback(Savepoint savepoint) throws SQLException {
         getConnection().rollback(savepoint);
-        log.info("Transaction rolledback");
-    }
-
-    private boolean getCurrentAutoCommit() throws SQLException {
-        return getConnection().getAutoCommit();
+        connectionHelper.logTransactionRolledback(log);
     }
 
     @Override
     public void commit() throws SQLException {
         getConnection().commit();
-        log.info("Transaction committed");
+        connectionHelper.logTransactionCommitted(log);
     }
 
     @Override
     public DatabaseMetaData getMetaData() throws SQLException {
         DatabaseMetaData metaData = getConnection().getMetaData();
-        return new DatabaseMetaDataProxy(metaData, this);
+        return connectionHelper.proxyDatabaseMetaData(metaData);
     }
 
     @Override
     public CallableStatement prepareCall(String sql) throws SQLException {
         CallableStatement statement = getConnection().prepareCall(sql);
-        return proxyCallableStatement(statement);
+        return connectionHelper.proxyCallableStatement(statement);
     }
 
     @Override
     public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
         CallableStatement statement = getConnection().prepareCall(sql, resultSetType, resultSetConcurrency);
-        return proxyCallableStatement(statement);
+        return connectionHelper.proxyCallableStatement(statement);
     }
 
     @Override
     public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
         CallableStatement statement = getConnection().prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
-        return proxyCallableStatement(statement);
+        return connectionHelper.proxyCallableStatement(statement);
     }
 
+    @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement(sql);
-        return proxyPreparedStatement(statement);
+        return connectionHelper.proxyPreparedStatement(statement);
     }
 
+    @Override
     public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement(sql, resultSetType, resultSetConcurrency);
-        return proxyPreparedStatement(statement);
+        return connectionHelper.proxyPreparedStatement(statement);
     }
 
+    @Override
     public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
-        return proxyPreparedStatement(statement);
+        return connectionHelper.proxyPreparedStatement(statement);
     }
 
+    @Override
     public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement(sql, autoGeneratedKeys);
-        return proxyPreparedStatement(statement);
+        return connectionHelper.proxyPreparedStatement(statement);
     }
 
+    @Override
     public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement(sql, columnIndexes);
-        return proxyPreparedStatement(statement);
+        return connectionHelper.proxyPreparedStatement(statement);
     }
 
+    @Override
     public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement(sql, columnNames);
-        return proxyPreparedStatement(statement);
-    }
-
-    private CallableStatement proxyCallableStatement(CallableStatement statement) {
-        return new CallableStatementProxy(statement, this);
-    }
-
-    private PreparedStatement proxyPreparedStatement(PreparedStatement statement) {
-        return new PreparedStatementProxy(statement, this);
+        return connectionHelper.proxyPreparedStatement(statement);
     }
 }
-

@@ -1,4 +1,4 @@
-package lt.nsg.jdbcglass;
+package lt.nsg.jdbcglass.metadata;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

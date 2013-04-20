@@ -1,6 +1,8 @@
-package lt.nsg.jdbcglass;
+package lt.nsg.jdbcglass.resultset;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ResultSetProxy extends AbstractResultSetProxy {
     private final Statement originalStatement;

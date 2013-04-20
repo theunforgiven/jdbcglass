@@ -1,16 +1,9 @@
-package lt.nsg.jdbcglass
+package lt.nsg.jdbcglass.connection
 
-import lt.nsg.jdbcglass.util.InMemoryDbUtil
-import org.h2.jdbc.JdbcConnection
+import lt.nsg.jdbcglass.LogbackCapturingSpecification
 import spock.lang.Subject
 
-import java.sql.CallableStatement
-import java.sql.Connection
-import java.sql.DatabaseMetaData
-import java.sql.PreparedStatement
-import java.sql.ResultSet
-import java.sql.Savepoint
-import java.sql.Statement
+import java.sql.*
 
 class ConnectionProxyTest extends LogbackCapturingSpecification {
     private Connection connection = Mock(Connection)
@@ -118,6 +111,7 @@ class ConnectionProxyTest extends LogbackCapturingSpecification {
         proxiedMeta.connection.is(proxied)
     }
 
+    @SuppressWarnings("GroovyAssignabilityCheck")
     def "proxies callables correctly"() {
         given:
         def statement1 = Mock(CallableStatement)
