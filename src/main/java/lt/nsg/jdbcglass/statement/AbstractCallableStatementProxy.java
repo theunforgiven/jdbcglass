@@ -15,8 +15,8 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
         return AbstractCallableStatementProxy.this.callableStatement;
     }
 
-    public AbstractCallableStatementProxy(CallableStatement callableStatement, Connection connection) {
-        super(callableStatement, connection);
+    public AbstractCallableStatementProxy(CallableStatement callableStatement, Connection connection, String sql) {
+        super(callableStatement, connection, sql);
         this.callableStatement = callableStatement;
     }
 

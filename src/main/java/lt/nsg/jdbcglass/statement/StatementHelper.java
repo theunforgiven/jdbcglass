@@ -2,7 +2,6 @@ package lt.nsg.jdbcglass.statement;
 
 import org.slf4j.Logger;
 
-import java.sql.ParameterMetaData;
 import java.util.ArrayList;
 
 public class StatementHelper {
@@ -10,11 +9,6 @@ public class StatementHelper {
 
 
     public StatementHelper() {
-    }
-
-    @SuppressWarnings("UnusedParameters")
-    public void logParameterizedQuery(ParameterMetaData parameterMetaData, Logger log) {
-        log.info("executeQuery() query parameter metadata");
     }
 
     void logSql(String sql, Logger logger) {
@@ -33,5 +27,17 @@ public class StatementHelper {
 
     public void addBatch(String sql) {
         batches.add(sql);
+    }
+
+    public void writeLogStatement(LogStatementEntry lse, Logger log) {
+        log.info(formatLogStatement(lse));
+    }
+
+    public void logAddBatch(LogStatementEntry lse) {
+        this.addBatch(formatLogStatement(lse));
+    }
+
+    private String formatLogStatement(LogStatementEntry lse) {
+        return lse.getSql();
     }
 }

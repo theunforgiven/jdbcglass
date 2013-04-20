@@ -2,15 +2,19 @@ package lt.nsg.jdbcglass.statement
 
 import lt.nsg.jdbcglass.LogbackCapturingSpecification
 import lt.nsg.jdbcglass.resultset.ResultSetProxy
+import spock.lang.Subject
 
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 class PreparedStatementProxyTest extends LogbackCapturingSpecification {
-    def connection = Mock(Connection)
-    def preparedStatement = Mock(PreparedStatement)
-    def proxied = new PreparedStatementProxy(preparedStatement, connection)
+    private static final String PREPARED_SQL = "SQL"
+    private Connection connection = Mock(Connection)
+    private PreparedStatement preparedStatement = Mock(PreparedStatement)
+
+    @Subject
+    def proxied = new PreparedStatementProxy(preparedStatement, connection, PREPARED_SQL)
 
     def "proxies a result set"() {
         given:
@@ -47,6 +51,57 @@ class PreparedStatementProxyTest extends LogbackCapturingSpecification {
         proxied.executeQuery()
 
         then:
-        logOutput.first() == "executeQuery() query parameter metadata"
+        logOutput.first() == PREPARED_SQL
     }
+
+    def "logs query parameter meta data and sql when execute update is called"() {
+        when:
+        proxied.executeUpdate()
+
+        then:
+        logOutput.first() == PREPARED_SQL
+        1 * preparedStatement.executeUpdate()
+    }
+
+    def "logs query parameter meta data and sql when execute is called"() {
+        when:
+        proxied.execute()
+
+        then:
+        logOutput.first() == PREPARED_SQL
+        1 * preparedStatement.execute()
+    }
+
+    def "logs query parameter meta data and sql when add batch is called"() {
+        when:
+        proxied.addBatch()
+
+        then:
+        1 * preparedStatement.getParameterMetaData()
+
+        and:
+        logOutput.size() == 0
+
+        when:
+        proxied.addBatch()
+
+        then:
+        1 * preparedStatement.getParameterMetaData()
+
+        and:
+        logOutput.size() == 0
+
+        when:
+        proxied.executeBatch()
+
+        then:
+        1 * preparedStatement.executeBatch()
+
+        and:
+        logOutput.first() == PREPARED_SQL
+        logOutput.last() == PREPARED_SQL
+        logOutput.size() == 2
+    }
+
+
 }

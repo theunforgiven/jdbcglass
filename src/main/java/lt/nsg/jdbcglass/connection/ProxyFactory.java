@@ -17,12 +17,12 @@ public class ProxyFactory {
         this.connectionProxy = connectionProxy;
     }
 
-    public CallableStatement proxyCallableStatement(CallableStatement statement) {
-        return new CallableStatementProxy(statement, connectionProxy);
+    public CallableStatement proxyCallableStatement(CallableStatement statement, String sql) {
+        return new CallableStatementProxy(statement, connectionProxy, sql);
     }
 
-    public PreparedStatement proxyPreparedStatement(PreparedStatement statement) {
-        return new PreparedStatementProxy(statement, connectionProxy);
+    public PreparedStatement proxyPreparedStatement(PreparedStatement statement, String sql) {
+        return new PreparedStatementProxy(statement, connectionProxy, sql);
     }
 
     public Statement proxyStatement(Statement statement) {

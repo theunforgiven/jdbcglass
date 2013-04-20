@@ -23,9 +23,13 @@ public abstract class AbstractPreparedStatementProxy extends StatementProxy impl
     public abstract ResultSet executeQuery() throws SQLException;
 
     @Override
-    public int executeUpdate() throws SQLException {
-        return preparedStatement.executeUpdate();
-    }
+    public abstract int executeUpdate() throws SQLException;
+
+    @Override
+    public abstract boolean execute() throws SQLException;
+
+    @Override
+    public abstract void addBatch() throws SQLException;
 
     @Override
     public void setNull(int parameterIndex, int sqlType) throws SQLException {
@@ -126,16 +130,6 @@ public abstract class AbstractPreparedStatementProxy extends StatementProxy impl
     @Override
     public void setObject(int parameterIndex, Object x) throws SQLException {
         preparedStatement.setObject(parameterIndex, x);
-    }
-
-    @Override
-    public boolean execute() throws SQLException {
-        return preparedStatement.execute();
-    }
-
-    @Override
-    public void addBatch() throws SQLException {
-        preparedStatement.addBatch();
     }
 
     @Override
