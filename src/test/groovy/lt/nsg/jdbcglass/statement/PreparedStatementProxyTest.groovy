@@ -38,4 +38,15 @@ class PreparedStatementProxyTest extends LogbackCapturingSpecification {
         then:
         firstReturnedResultSet != secondReturnedResultSet
     }
+
+    def "logs query parameter meta data and sql when execute query is called"() {
+        given:
+        preparedStatement.executeQuery() >> Mock(ResultSet)
+
+        when:
+        proxied.executeQuery()
+
+        then:
+        logOutput.first() == "executeQuery() query parameter metadata"
+    }
 }

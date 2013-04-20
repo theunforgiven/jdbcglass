@@ -12,21 +12,13 @@ public class StatementProxy extends AbstractStatementProxy {
     private final static Logger log = LoggerFactory.getLogger(StatementProxy.class);
     private final Connection connection;
     private final StatementHelper statementHelper;
+    private final ResultSetProxyHelper resultSetProxyHelper;
 
     public StatementProxy(Statement statement, Connection connection) {
         super(statement);
         this.connection = connection;
-        this.statementHelper = new StatementHelper(this);
-    }
-
-    protected StatementHelper getStatementHelper() {
-        return this.statementHelper;
-    }
-
-    @Override
-    final public ResultSet executeQuery(String sql) throws SQLException {
-        statementHelper.logSql(sql, log);
-        return statementHelper.hasCachedResultSet(getStatement().executeQuery(sql));
+        this.statementHelper = new StatementHelper();
+        this.resultSetProxyHelper = new ResultSetProxyHelper(this);
     }
 
     @Override
@@ -40,12 +32,6 @@ public class StatementProxy extends AbstractStatementProxy {
     public boolean execute(String sql) throws SQLException {
         statementHelper.logSql(sql, log);
         return getStatement().execute(sql);
-    }
-
-    @Override
-    public ResultSet getResultSet() throws SQLException {
-        ResultSet resultSet = this.getStatement().getResultSet();
-        return this.statementHelper.hasCachedResultSet(resultSet);
     }
 
     @Override
@@ -106,11 +92,32 @@ public class StatementProxy extends AbstractStatementProxy {
     @Override
     public ResultSet getGeneratedKeys() throws SQLException {
         ResultSet resultSet = getStatement().getGeneratedKeys();
-        return statementHelper.proxyResultSet(resultSet);
+        return this.resultSetProxyHelper.proxyResultSet(resultSet);
     }
 
     @Override
     public final Connection getConnection() throws SQLException {
         return this.connection;
+    }
+
+    @Override
+    public final ResultSet executeQuery(String sql) throws SQLException {
+        statementHelper.logSql(sql, log);
+        final ResultSet resultSet = getStatement().executeQuery(sql);
+        return this.resultSetProxyHelper.updateCachedResultSet(resultSet);
+    }
+
+    @Override
+    public final ResultSet getResultSet() throws SQLException {
+        ResultSet resultSet = this.getStatement().getResultSet();
+        return this.resultSetProxyHelper.updateCachedResultSet(resultSet);
+    }
+
+    protected ResultSetProxyHelper getResultSetProxyHelper() {
+        return this.resultSetProxyHelper;
+    }
+
+    protected StatementHelper getStatementHelper() {
+        return this.statementHelper;
     }
 }
