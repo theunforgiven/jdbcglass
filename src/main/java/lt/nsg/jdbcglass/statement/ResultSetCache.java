@@ -5,11 +5,11 @@ import lt.nsg.jdbcglass.resultset.ResultSetProxy;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class ResultSetProxyHelper {
+public class ResultSetCache {
     private final Statement statement;
     private ResultSetProxy currentResultSet;
 
-    public ResultSetProxyHelper(Statement statement) {
+    public ResultSetCache(Statement statement) {
         this.statement = statement;
     }
 

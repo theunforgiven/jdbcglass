@@ -1,12 +1,7 @@
 package lt.nsg.jdbcglass.statement;
 
 public class PreparedParameter {
-    public static final PreparedParameter Unloggable = new PreparedParameter(new Object()) {
-        @Override
-        public String toString() {
-            return "Unloggable";
-        }
-    };
+    public static final PreparedParameter Unloggable = new PreparedParameter("Unloggable");
 
     private final Object parameterValue;
 
@@ -17,5 +12,13 @@ public class PreparedParameter {
     @Override
     public String toString() {
         return this.parameterValue.toString();
+    }
+
+    public String interpolateString(String sql) {
+        return sql.replaceFirst("\\?", this.getFormattedStringValue());
+    }
+
+    protected String getFormattedStringValue() {
+        return "'".concat(this.toString()).concat("'");
     }
 }

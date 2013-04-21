@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -14,7 +15,7 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     private final TreeMap<String, PreparedParameter> callableParameterMap = new TreeMap<>();
 
     protected CallableStatement getCallableStatement() {
-        return AbstractCallableStatementProxy.this.callableStatement;
+        return this.callableStatement;
     }
 
     public AbstractCallableStatementProxy(CallableStatement callableStatement, Connection connection, String sql) {
@@ -24,6 +25,14 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
 
     protected TreeMap<String, PreparedParameter> getCallableParameters() {
         return this.callableParameterMap;
+    }
+
+    @Override
+    protected Collection<PreparedParameter> getPreparedParameters() {
+        if (this.getCallableParameters().size() > 0) {
+            return this.getCallableParameters().values();
+        }
+        return super.getPreparedParameters();
     }
 
     @Override
@@ -644,7 +653,7 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     }
 
     private void setParameter(String parameterName, Object parameterValue) {
-        this.callableParameterMap.put(parameterName, new PreparedParameter(parameterValue));
+        this.callableParameterMap.put(parameterName, new CallableParameter(parameterName, parameterValue));
     }
 
     private void setUnloggableParameter(String parameterName) {

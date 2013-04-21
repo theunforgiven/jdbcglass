@@ -56,7 +56,6 @@ class HibernateSpecification extends Specification {
 
         tx = session.beginTransaction()
         def parent = session.createQuery("FROM ParentEntity pe WHERE pe.id = :parentId").setParameter("parentId", parentId).uniqueResult() as ParentEntity
-        parent.children.each { println it }
         tx.commit()
 
         tx = session.beginTransaction()
@@ -66,8 +65,8 @@ class HibernateSpecification extends Specification {
                 CallableStatement stmt = connection.prepareCall('SELECT p.id FROM people p WHERE p.id = ?');
                 stmt.setInt(1, parentId as int)
                 ResultSet resultSet = stmt.executeQuery()
-                if (resultSet.next()) {
-                    println "${resultSet.getInt(1)}"
+                if (!resultSet.next()) {
+                    assert false, "No result in resultset"
                 }
                 resultSet.close()
                 stmt.close()

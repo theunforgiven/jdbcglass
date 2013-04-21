@@ -11,4 +11,4 @@ appender("STDOUT", ConsoleAppender) {
 
 logger("org.hibernate.SQL", WARN)
 
-root(DEBUG, ["STDOUT"])
+root(INFO, ["STDOUT"])

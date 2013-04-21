@@ -10,13 +10,19 @@ import java.util.Map;
 
 public abstract class AbstractResultSetProxy implements ResultSet {
     private final ResultSet resultSet;
+    private final Statement originalStatement;
 
-    public AbstractResultSetProxy(ResultSet resultSet) {
+    public AbstractResultSetProxy(ResultSet resultSet, Statement originalStatement) {
         this.resultSet = resultSet;
+        this.originalStatement = originalStatement;
     }
 
     public boolean isTargetProxyOf(ResultSet resultSet) {
         return this.resultSet == resultSet;
+    }
+
+    protected ResultSet getResultSet() {
+        return this.resultSet;
     }
 
     @Override
@@ -594,7 +600,9 @@ public abstract class AbstractResultSetProxy implements ResultSet {
     }
 
     @Override
-    public abstract Statement getStatement() throws SQLException;
+    public Statement getStatement() throws SQLException {
+        return this.originalStatement;
+    }
 
     @Override
     public Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {

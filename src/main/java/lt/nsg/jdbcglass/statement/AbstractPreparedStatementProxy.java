@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.TreeMap;
 
 public abstract class AbstractPreparedStatementProxy extends StatementProxy implements PreparedStatement {
@@ -23,21 +24,34 @@ public abstract class AbstractPreparedStatementProxy extends StatementProxy impl
         return this.preparedStatement;
     }
 
-    protected TreeMap<Integer, PreparedParameter> getPreparedParameters() {
+    protected TreeMap<Integer, PreparedParameter> getPreparedParametersMap() {
         return this.preparedParameterMap;
     }
 
-    @Override
-    public abstract ResultSet executeQuery() throws SQLException;
+    protected Collection<PreparedParameter> getPreparedParameters() {
+        return this.getPreparedParametersMap().values();
+    }
 
     @Override
-    public abstract int executeUpdate() throws SQLException;
+    public ResultSet executeQuery() throws SQLException {
+        final ResultSet resultSet = this.getPreparedStatement().executeQuery();
+        return this.getResultSetCache().updateCachedResultSet(resultSet);
+    }
 
     @Override
-    public abstract boolean execute() throws SQLException;
+    public int executeUpdate() throws SQLException {
+        return this.getPreparedStatement().executeUpdate();
+    }
 
     @Override
-    public abstract void addBatch() throws SQLException;
+    public boolean execute() throws SQLException {
+        return this.getPreparedStatement().execute();
+    }
+
+    @Override
+    public void addBatch() throws SQLException {
+        this.getPreparedStatement().addBatch();
+    }
 
     @Override
     public void clearParameters() throws SQLException {
