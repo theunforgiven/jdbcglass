@@ -24,7 +24,7 @@ public class CallableStatementProxy extends AbstractCallableStatementProxy {
 
         for (Map.Entry<String, PreparedParameter> entry : callableParameters.entrySet()) {
             final String parameterName = entry.getKey();
-            final String parameterValue = entry.getValue().toString();
+            final String parameterValue = "'".concat(entry.getValue().toString()).concat("'");
             parameterInterpolated = parameterInterpolated.replaceAll(":".concat(parameterName), parameterValue);
         }
 

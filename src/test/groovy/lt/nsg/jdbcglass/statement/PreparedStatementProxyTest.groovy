@@ -97,5 +97,20 @@ class PreparedStatementProxyTest extends LogbackCapturingSpecification {
         logOutput.size() == 2
     }
 
+    def "should format parameters"() {
+        given:
+        def foo = "a"
+        def bar = "b"
+        def sql = """SELECT * FROM WOOT WHERE FOO = ? AND BAR = ?"""
+        proxied = new PreparedStatementProxy(preparedStatement, connection, sql)
+
+        when:
+        proxied.setString(1, foo)
+        proxied.setString(2, bar)
+        proxied.execute()
+
+        then:
+        logOutput.first() == """SELECT * FROM WOOT WHERE FOO = '${foo}' AND BAR = '${bar}'"""
+    }
 
 }
