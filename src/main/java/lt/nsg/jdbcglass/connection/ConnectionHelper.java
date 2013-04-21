@@ -7,12 +7,8 @@ public class ConnectionHelper {
     public ConnectionHelper() {
     }
 
-    void logAutoCommitChanged(Logger log, boolean autoCommit, boolean previousAutoCommit) {
-        if (previousAutoCommit && !autoCommit) {
-            logTransactionCommitted(log);
-        } else if (!previousAutoCommit && autoCommit) {
-            log.info("Transaction started");
-        }
+    void logAutoCommitChanged(Logger log, boolean autoCommit) {
+        log.info("Autocommit set to: {}", autoCommit);
     }
 
     void logTransactionCommitted(Logger log) {

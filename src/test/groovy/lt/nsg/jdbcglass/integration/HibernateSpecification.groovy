@@ -10,10 +10,16 @@ import org.hibernate.SessionFactory
 import org.hibernate.cfg.Configuration
 import org.hibernate.cfg.Environment
 import org.hibernate.dialect.H2Dialect
+import org.hibernate.jdbc.Work
 import org.hibernate.service.jdbc.connections.internal.UserSuppliedConnectionProviderImpl
 import org.hibernate.tool.hbm2ddl.SchemaExport
 import spock.lang.Shared
 import spock.lang.Specification
+
+import java.sql.CallableStatement
+import java.sql.Connection
+import java.sql.ResultSet
+import java.sql.SQLException
 
 class HibernateSpecification extends Specification {
     @Shared
@@ -45,12 +51,29 @@ class HibernateSpecification extends Specification {
         when:
         def session = getSession()
         def tx = session.beginTransaction()
-        session.save(entity)
+        def parentId = session.save(entity)
         tx.commit()
 
         tx = session.beginTransaction()
-        def parent = session.createQuery("FROM ParentEntity").uniqueResult() as ParentEntity
+        def parent = session.createQuery("FROM ParentEntity pe WHERE pe.id = :parentId").setParameter("parentId", parentId).uniqueResult() as ParentEntity
         parent.children.each { println it }
+        tx.commit()
+
+        tx = session.beginTransaction()
+        session.doWork(new Work() {
+            @Override
+            void execute(Connection connection) throws SQLException {
+                CallableStatement stmt = connection.prepareCall('SELECT p.id FROM people p WHERE p.id = ?');
+                stmt.setInt(1, parentId as int)
+                ResultSet resultSet = stmt.executeQuery()
+                if (resultSet.next()) {
+                    println "${resultSet.getInt(1)}"
+                }
+                resultSet.close()
+                stmt.close()
+            }
+        })
+
         tx.commit()
         session.close()
 
@@ -59,7 +82,8 @@ class HibernateSpecification extends Specification {
     }
 
     private Session getSession() {
-        def connection = new ConnectionProxy(new JdbcConnection("jdbc:h2:mem:test", new Properties()))
+        def h2Connection = new JdbcConnection("jdbc:h2:mem:test", new Properties())
+        def connection = new ConnectionProxy(h2Connection)
         new SchemaExport(configuration, connection).execute(false, true, false, true)
         sessionFactory.withOptions()
                       .connection(connection)

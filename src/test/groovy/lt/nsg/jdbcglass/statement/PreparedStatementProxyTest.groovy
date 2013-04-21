@@ -77,18 +77,12 @@ class PreparedStatementProxyTest extends LogbackCapturingSpecification {
         proxied.addBatch()
 
         then:
-        1 * preparedStatement.getParameterMetaData()
-
-        and:
         logOutput.size() == 0
 
         when:
         proxied.addBatch()
 
         then:
-        1 * preparedStatement.getParameterMetaData()
-
-        and:
         logOutput.size() == 0
 
         when:

@@ -8,6 +8,7 @@ import javax.persistence.*
 @Entity
 @EqualsAndHashCode
 @ToString(includeFields = true)
+@Table(name = "people")
 public class ParentEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id

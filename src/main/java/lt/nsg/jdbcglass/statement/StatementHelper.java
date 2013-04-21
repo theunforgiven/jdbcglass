@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class StatementHelper {
     private final ArrayList<String> batches = new ArrayList<>();
 
-
     public StatementHelper() {
     }
 
@@ -30,14 +29,10 @@ public class StatementHelper {
     }
 
     public void writeLogStatement(LogStatementEntry lse, Logger log) {
-        log.info(formatLogStatement(lse));
+        log.info(lse.getSql());
     }
 
     public void logAddBatch(LogStatementEntry lse) {
-        this.addBatch(formatLogStatement(lse));
-    }
-
-    private String formatLogStatement(LogStatementEntry lse) {
-        return lse.getSql();
+        this.addBatch(lse.getSql());
     }
 }

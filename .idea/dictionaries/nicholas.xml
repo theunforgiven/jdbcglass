@@ -3,6 +3,7 @@
     <words>
       <w>logback</w>
       <w>proxied</w>
+      <w>unloggable</w>
     </words>
   </dictionary>
 </component>

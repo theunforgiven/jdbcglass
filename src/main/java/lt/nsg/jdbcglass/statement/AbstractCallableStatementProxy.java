@@ -7,9 +7,11 @@ import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class AbstractCallableStatementProxy extends PreparedStatementProxy implements CallableStatement {
     private final CallableStatement callableStatement;
+    private final TreeMap<String, PreparedParameter> callableParameterMap = new TreeMap<>();
 
     protected CallableStatement getCallableStatement() {
         return AbstractCallableStatementProxy.this.callableStatement;
@@ -18,6 +20,16 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     public AbstractCallableStatementProxy(CallableStatement callableStatement, Connection connection, String sql) {
         super(callableStatement, connection, sql);
         this.callableStatement = callableStatement;
+    }
+
+    protected TreeMap<String, PreparedParameter> getCallableParameters() {
+        return this.callableParameterMap;
+    }
+
+    @Override
+    public void clearParameters() throws SQLException {
+        this.callableParameterMap.clear();
+        super.clearParameters();
     }
 
     @Override
@@ -179,126 +191,151 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     @Override
     public void setURL(String parameterName, URL val) throws SQLException {
         callableStatement.setURL(parameterName, val);
+        setParameter(parameterName, val);
     }
 
     @Override
     public void setNull(String parameterName, int sqlType) throws SQLException {
         callableStatement.setNull(parameterName, sqlType);
+        setParameter(parameterName, null);
     }
 
     @Override
     public void setBoolean(String parameterName, boolean x) throws SQLException {
         callableStatement.setBoolean(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setByte(String parameterName, byte x) throws SQLException {
         callableStatement.setByte(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setShort(String parameterName, short x) throws SQLException {
         callableStatement.setShort(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setInt(String parameterName, int x) throws SQLException {
         callableStatement.setInt(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setLong(String parameterName, long x) throws SQLException {
         callableStatement.setLong(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setFloat(String parameterName, float x) throws SQLException {
         callableStatement.setFloat(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setDouble(String parameterName, double x) throws SQLException {
         callableStatement.setDouble(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setBigDecimal(String parameterName, BigDecimal x) throws SQLException {
         callableStatement.setBigDecimal(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setString(String parameterName, String x) throws SQLException {
         callableStatement.setString(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setBytes(String parameterName, byte[] x) throws SQLException {
         callableStatement.setBytes(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setDate(String parameterName, Date x) throws SQLException {
         callableStatement.setDate(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setTime(String parameterName, Time x) throws SQLException {
         callableStatement.setTime(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setTimestamp(String parameterName, Timestamp x) throws SQLException {
         callableStatement.setTimestamp(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setAsciiStream(String parameterName, InputStream x, int length) throws SQLException {
         callableStatement.setAsciiStream(parameterName, x, length);
+        setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setBinaryStream(String parameterName, InputStream x, int length) throws SQLException {
         callableStatement.setBinaryStream(parameterName, x, length);
+        setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setObject(String parameterName, Object x, int targetSqlType, int scale) throws SQLException {
         callableStatement.setObject(parameterName, x, targetSqlType, scale);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setObject(String parameterName, Object x, int targetSqlType) throws SQLException {
         callableStatement.setObject(parameterName, x, targetSqlType);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setObject(String parameterName, Object x) throws SQLException {
         callableStatement.setObject(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setCharacterStream(String parameterName, Reader reader, int length) throws SQLException {
         callableStatement.setCharacterStream(parameterName, reader, length);
+        setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setDate(String parameterName, Date x, Calendar cal) throws SQLException {
         callableStatement.setDate(parameterName, x, cal);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setTime(String parameterName, Time x, Calendar cal) throws SQLException {
         callableStatement.setTime(parameterName, x, cal);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setTimestamp(String parameterName, Timestamp x, Calendar cal) throws SQLException {
         callableStatement.setTimestamp(parameterName, x, cal);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setNull(String parameterName, int sqlType, String typeName) throws SQLException {
         callableStatement.setNull(parameterName, sqlType, typeName);
+        setParameter(parameterName, null);
     }
 
     @Override
@@ -429,36 +466,43 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     @Override
     public void setRowId(String parameterName, RowId x) throws SQLException {
         callableStatement.setRowId(parameterName, x);
+        setParameter(parameterName, x);
     }
 
     @Override
     public void setNString(String parameterName, String value) throws SQLException {
         callableStatement.setNString(parameterName, value);
+        setParameter(parameterName, value);
     }
 
     @Override
     public void setNCharacterStream(String parameterName, Reader value, long length) throws SQLException {
         callableStatement.setNCharacterStream(parameterName, value, length);
+        setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setNClob(String parameterName, NClob value) throws SQLException {
         callableStatement.setNClob(parameterName, value);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setClob(String parameterName, Reader reader, long length) throws SQLException {
         callableStatement.setClob(parameterName, reader, length);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setBlob(String parameterName, InputStream inputStream, long length) throws SQLException {
         callableStatement.setBlob(parameterName, inputStream, length);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setNClob(String parameterName, Reader reader, long length) throws SQLException {
         callableStatement.setNClob(parameterName, reader, length);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
@@ -474,6 +518,7 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     @Override
     public void setSQLXML(String parameterName, SQLXML xmlObject) throws SQLException {
         callableStatement.setSQLXML(parameterName, xmlObject);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
@@ -519,61 +564,73 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     @Override
     public void setBlob(String parameterName, Blob x) throws SQLException {
         callableStatement.setBlob(parameterName, x);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setClob(String parameterName, Clob x) throws SQLException {
         callableStatement.setClob(parameterName, x);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setAsciiStream(String parameterName, InputStream x, long length) throws SQLException {
         callableStatement.setAsciiStream(parameterName, x, length);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setBinaryStream(String parameterName, InputStream x, long length) throws SQLException {
         callableStatement.setBinaryStream(parameterName, x, length);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setCharacterStream(String parameterName, Reader reader, long length) throws SQLException {
         callableStatement.setCharacterStream(parameterName, reader, length);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setAsciiStream(String parameterName, InputStream x) throws SQLException {
         callableStatement.setAsciiStream(parameterName, x);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setBinaryStream(String parameterName, InputStream x) throws SQLException {
         callableStatement.setBinaryStream(parameterName, x);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setCharacterStream(String parameterName, Reader reader) throws SQLException {
         callableStatement.setCharacterStream(parameterName, reader);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setNCharacterStream(String parameterName, Reader value) throws SQLException {
         callableStatement.setNCharacterStream(parameterName, value);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setClob(String parameterName, Reader reader) throws SQLException {
         callableStatement.setClob(parameterName, reader);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setBlob(String parameterName, InputStream inputStream) throws SQLException {
         callableStatement.setBlob(parameterName, inputStream);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
     public void setNClob(String parameterName, Reader reader) throws SQLException {
         callableStatement.setNClob(parameterName, reader);
+        this.setUnloggableParameter(parameterName);
     }
 
     @Override
@@ -584,6 +641,14 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     @Override
     public <T> T getObject(String parameterName, Class<T> type) throws SQLException {
         return callableStatement.getObject(parameterName, type);
+    }
+
+    private void setParameter(String parameterName, Object parameterValue) {
+        this.callableParameterMap.put(parameterName, new PreparedParameter(parameterValue));
+    }
+
+    private void setUnloggableParameter(String parameterName) {
+        this.callableParameterMap.put(parameterName, PreparedParameter.Unloggable);
     }
 }
 

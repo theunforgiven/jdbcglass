@@ -3,14 +3,12 @@ package lt.nsg.jdbcglass.integration.entities
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 @EqualsAndHashCode
 @ToString(includeFields = true)
+@Table(name = "children")
 public class ChildEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

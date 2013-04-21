@@ -42,9 +42,8 @@ public class ConnectionProxy extends AbstractConnectionProxy {
 
     @Override
     public void setAutoCommit(boolean autoCommit) throws SQLException {
-        boolean previousAutoCommit = getConnection().getAutoCommit();
         getConnection().setAutoCommit(autoCommit);
-        connectionHelper.logAutoCommitChanged(log, autoCommit, previousAutoCommit);
+        connectionHelper.logAutoCommitChanged(log, autoCommit);
     }
 
     @Override

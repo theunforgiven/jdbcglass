@@ -58,9 +58,13 @@ class ConnectionProxyTest extends LogbackCapturingSpecification {
         1 * connection.setAutoCommit(false)
 
         and:
-        logOutput.size() == 2
-        logOutput.first() == "Transaction started"
-        logOutput.last() == "Transaction committed"
+        logOutput.size() == 4
+        logOutput == [
+                "Autocommit set to: false",
+                "Autocommit set to: true",
+                "Autocommit set to: true",
+                "Autocommit set to: false"
+        ]
     }
 
     def "can log rolling back a transaction"() {
