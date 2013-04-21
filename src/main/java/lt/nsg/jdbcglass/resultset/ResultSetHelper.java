@@ -22,10 +22,7 @@ public class ResultSetHelper {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         for (ResultSetColumn column : columns) {
-            sb.append("'")
-                    .append(column.toString())
-                    .append("'")
-                    .append(",");
+            sb.append(column.getFormattedStringValue()).append(",");
         }
         sb.replace(sb.length() - 1, sb.length(), "}");
         return sb.toString();

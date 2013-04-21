@@ -1,6 +1,8 @@
 package lt.nsg.jdbcglass.resultset;
 
-public class ResultSetColumn {
+import lt.nsg.jdbcglass.FormatableValue;
+
+public class ResultSetColumn extends FormatableValue {
     private final String value;
 
     public ResultSetColumn(String value) {
