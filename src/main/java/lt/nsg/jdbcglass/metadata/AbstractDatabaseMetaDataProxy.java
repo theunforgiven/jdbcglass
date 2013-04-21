@@ -1,27 +1,19 @@
 package lt.nsg.jdbcglass.metadata;
 
+import lt.nsg.jdbcglass.core.Wrappable;
 import lt.nsg.jdbcglass.resultset.ResultSetProxy;
 import lt.nsg.jdbcglass.statement.StatementProxy;
 
 import java.sql.*;
 
-public abstract class AbstractDatabaseMetaDataProxy implements DatabaseMetaData {
+public abstract class AbstractDatabaseMetaDataProxy extends Wrappable implements DatabaseMetaData {
     private final DatabaseMetaData databaseMetaData;
     private final Connection connection;
 
     public AbstractDatabaseMetaDataProxy(DatabaseMetaData databaseMetaData, Connection connection) {
+        super(databaseMetaData);
         this.connection = connection;
         this.databaseMetaData = databaseMetaData;
-    }
-
-    @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
-        return databaseMetaData.unwrap(iface);
-    }
-
-    @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return databaseMetaData.isWrapperFor(iface);
     }
 
     @Override

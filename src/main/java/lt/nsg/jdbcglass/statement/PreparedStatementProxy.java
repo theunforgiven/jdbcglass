@@ -39,6 +39,6 @@ public class PreparedStatementProxy extends AbstractPreparedStatementProxy {
     @Override
     public void addBatch() throws SQLException {
         super.addBatch();
-        this.getStatementHelper().logAddBatch(this.getSql(), this.getPreparedParameters());
+        this.getBatchLogger().logAddBatch(this.getSql(), this.getPreparedParameters());
     }
 }

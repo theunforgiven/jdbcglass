@@ -1,27 +1,20 @@
 package lt.nsg.jdbcglass.connection;
 
+import lt.nsg.jdbcglass.core.Wrappable;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public abstract class AbstractConnectionProxy implements Connection {
+public abstract class AbstractConnectionProxy extends Wrappable implements Connection {
     private final Connection connection;
     private final ProxyFactory proxyFactory;
 
     public AbstractConnectionProxy(Connection connection) {
+        super(connection);
         this.connection = connection;
         this.proxyFactory = new ProxyFactory(this);
-    }
-
-    @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
-        return connection.unwrap(iface);
-    }
-
-    @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return connection.isWrapperFor(iface);
     }
 
     @Override

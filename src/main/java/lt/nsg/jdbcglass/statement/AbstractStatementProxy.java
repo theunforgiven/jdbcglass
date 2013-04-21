@@ -1,125 +1,114 @@
 package lt.nsg.jdbcglass.statement;
 
+import lt.nsg.jdbcglass.core.Wrappable;
+
 import java.sql.*;
 
-public abstract class AbstractStatementProxy implements Statement {
+public abstract class AbstractStatementProxy extends Wrappable implements Statement {
     private final Statement statement;
     private final Connection connection;
     private final ResultSetCache resultSetCache;
 
-    protected final Statement getStatement() {
-        return statement;
+    protected AbstractStatementProxy(Statement statement, Connection connection) {
+        super(statement);
+        this.statement = statement;
+        this.connection = connection;
+        this.resultSetCache = new ResultSetCache(this);
     }
 
     protected ResultSetCache getResultSetCache() {
         return this.resultSetCache;
     }
 
-    protected AbstractStatementProxy(Statement statement, Connection connection) {
-        this.statement = statement;
-        this.connection = connection;
-        this.resultSetCache = new ResultSetCache(this);
-    }
-
-    @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
-        return statement.unwrap(iface);
-    }
-
-    @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return statement.isWrapperFor(iface);
-    }
-
     @Override
     public void close() throws SQLException {
-        getStatement().close();
+        statement.close();
     }
 
     @Override
     public int getMaxFieldSize() throws SQLException {
-        return getStatement().getMaxFieldSize();
+        return statement.getMaxFieldSize();
     }
 
     @Override
     public void setMaxFieldSize(int max) throws SQLException {
-        getStatement().setMaxFieldSize(max);
+        statement.setMaxFieldSize(max);
     }
 
     @Override
     public int getMaxRows() throws SQLException {
-        return getStatement().getMaxRows();
+        return statement.getMaxRows();
     }
 
     @Override
     public void setMaxRows(int max) throws SQLException {
-        getStatement().setMaxRows(max);
+        statement.setMaxRows(max);
     }
 
     @Override
     public void setEscapeProcessing(boolean enable) throws SQLException {
-        getStatement().setEscapeProcessing(enable);
+        statement.setEscapeProcessing(enable);
     }
 
     @Override
     public int getQueryTimeout() throws SQLException {
-        return getStatement().getQueryTimeout();
+        return statement.getQueryTimeout();
     }
 
     @Override
     public void setQueryTimeout(int seconds) throws SQLException {
-        getStatement().setQueryTimeout(seconds);
+        statement.setQueryTimeout(seconds);
     }
 
     @Override
     public void cancel() throws SQLException {
-        getStatement().cancel();
+        statement.cancel();
     }
 
     @Override
     public SQLWarning getWarnings() throws SQLException {
-        return getStatement().getWarnings();
+        return statement.getWarnings();
     }
 
     @Override
     public void clearWarnings() throws SQLException {
-        getStatement().clearWarnings();
+        statement.clearWarnings();
     }
 
     @Override
     public void setCursorName(String name) throws SQLException {
-        getStatement().setCursorName(name);
+        statement.setCursorName(name);
     }
 
 
     @Override
     public int getResultSetHoldability() throws SQLException {
-        return getStatement().getResultSetHoldability();
+        return statement.getResultSetHoldability();
     }
 
     @Override
     public boolean isClosed() throws SQLException {
-        return getStatement().isClosed();
+        return statement.isClosed();
     }
 
     @Override
     public void setPoolable(boolean poolable) throws SQLException {
-        getStatement().setPoolable(poolable);
+        statement.setPoolable(poolable);
     }
 
     @Override
     public boolean isPoolable() throws SQLException {
-        return getStatement().isPoolable();
+        return statement.isPoolable();
     }
 
     @Override
     public void closeOnCompletion() throws SQLException {
-        getStatement().closeOnCompletion();
+        statement.closeOnCompletion();
     }
 
     @Override
     public boolean isCloseOnCompletion() throws SQLException {
-        return getStatement().isCloseOnCompletion();
+        return statement.isCloseOnCompletion();
     }
 
     @Override
@@ -129,119 +118,119 @@ public abstract class AbstractStatementProxy implements Statement {
 
     @Override
     public boolean getMoreResults(int current) throws SQLException {
-        return getStatement().getMoreResults(current);
+        return statement.getMoreResults(current);
     }
 
     @Override
     public ResultSet getGeneratedKeys() throws SQLException {
-        ResultSet resultSet = getStatement().getGeneratedKeys();
+        ResultSet resultSet = statement.getGeneratedKeys();
         return this.resultSetCache.proxyResultSet(resultSet);
     }
 
     @Override
     public int getUpdateCount() throws SQLException {
-        return getStatement().getUpdateCount();
+        return statement.getUpdateCount();
     }
 
     @Override
     public boolean getMoreResults() throws SQLException {
-        return getStatement().getMoreResults();
+        return statement.getMoreResults();
     }
 
     @Override
     public void setFetchDirection(int direction) throws SQLException {
-        getStatement().setFetchDirection(direction);
+        statement.setFetchDirection(direction);
     }
 
     @Override
     public int getFetchDirection() throws SQLException {
-        return getStatement().getFetchDirection();
+        return statement.getFetchDirection();
     }
 
     @Override
     public void setFetchSize(int rows) throws SQLException {
-        getStatement().setFetchSize(rows);
+        statement.setFetchSize(rows);
     }
 
     @Override
     public int getFetchSize() throws SQLException {
-        return getStatement().getFetchSize();
+        return statement.getFetchSize();
     }
 
     @Override
     public int getResultSetConcurrency() throws SQLException {
-        return getStatement().getResultSetConcurrency();
+        return statement.getResultSetConcurrency();
     }
 
     @Override
     public int getResultSetType() throws SQLException {
-        return getStatement().getResultSetType();
+        return statement.getResultSetType();
     }
 
     @Override
     public ResultSet executeQuery(String sql) throws SQLException {
-        final ResultSet resultSet = getStatement().executeQuery(sql);
+        final ResultSet resultSet = statement.executeQuery(sql);
         return this.resultSetCache.updateCachedResultSet(resultSet);
     }
 
     @Override
     public int executeUpdate(String sql) throws SQLException {
-        return getStatement().executeUpdate(sql);
+        return statement.executeUpdate(sql);
     }
 
     @Override
     public boolean execute(String sql) throws SQLException {
-        return getStatement().execute(sql);
+        return statement.execute(sql);
     }
 
     @Override
     public ResultSet getResultSet() throws SQLException {
-        ResultSet resultSet = this.getStatement().getResultSet();
+        ResultSet resultSet = statement.getResultSet();
         return this.resultSetCache.updateCachedResultSet(resultSet);
     }
 
     @Override
     public void addBatch(String sql) throws SQLException {
-        getStatement().addBatch(sql);
+        statement.addBatch(sql);
     }
 
     @Override
     public void clearBatch() throws SQLException {
-        getStatement().clearBatch();
+        statement.clearBatch();
     }
 
     @Override
     public int[] executeBatch() throws SQLException {
-        return getStatement().executeBatch();
+        return statement.executeBatch();
     }
 
     @Override
     public int executeUpdate(String sql, int autoGeneratedKeys) throws SQLException {
-        return getStatement().executeUpdate(sql, autoGeneratedKeys);
+        return statement.executeUpdate(sql, autoGeneratedKeys);
     }
 
     @Override
     public int executeUpdate(String sql, int[] columnIndexes) throws SQLException {
-        return getStatement().executeUpdate(sql, columnIndexes);
+        return statement.executeUpdate(sql, columnIndexes);
     }
 
     @Override
     public int executeUpdate(String sql, String[] columnNames) throws SQLException {
-        return getStatement().executeUpdate(sql, columnNames);
+        return statement.executeUpdate(sql, columnNames);
     }
 
     @Override
     public boolean execute(String sql, int autoGeneratedKeys) throws SQLException {
-        return getStatement().execute(sql, autoGeneratedKeys);
+        return statement.execute(sql, autoGeneratedKeys);
     }
 
     @Override
     public boolean execute(String sql, int[] columnIndexes) throws SQLException {
-        return getStatement().execute(sql, columnIndexes);
+        return statement.execute(sql, columnIndexes);
     }
 
     @Override
     public boolean execute(String sql, String[] columnNames) throws SQLException {
-        return getStatement().execute(sql, columnNames);
+        return statement.execute(sql, columnNames);
     }
 }

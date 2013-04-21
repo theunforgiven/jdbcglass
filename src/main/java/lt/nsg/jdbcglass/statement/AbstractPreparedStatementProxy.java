@@ -20,37 +20,29 @@ public abstract class AbstractPreparedStatementProxy extends StatementProxy impl
         this.sql = sql;
     }
 
-    protected PreparedStatement getPreparedStatement() {
-        return this.preparedStatement;
-    }
-
-    protected TreeMap<Integer, PreparedParameter> getPreparedParametersMap() {
-        return this.preparedParameterMap;
-    }
-
     protected Collection<PreparedParameter> getPreparedParameters() {
-        return this.getPreparedParametersMap().values();
+        return this.preparedParameterMap.values();
     }
 
     @Override
     public ResultSet executeQuery() throws SQLException {
-        final ResultSet resultSet = this.getPreparedStatement().executeQuery();
+        final ResultSet resultSet = this.preparedStatement.executeQuery();
         return this.getResultSetCache().updateCachedResultSet(resultSet);
     }
 
     @Override
     public int executeUpdate() throws SQLException {
-        return this.getPreparedStatement().executeUpdate();
+        return this.preparedStatement.executeUpdate();
     }
 
     @Override
     public boolean execute() throws SQLException {
-        return this.getPreparedStatement().execute();
+        return this.preparedStatement.execute();
     }
 
     @Override
     public void addBatch() throws SQLException {
-        this.getPreparedStatement().addBatch();
+        this.preparedStatement.addBatch();
     }
 
     @Override

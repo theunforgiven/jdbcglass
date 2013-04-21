@@ -14,23 +14,15 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     private final CallableStatement callableStatement;
     private final TreeMap<String, PreparedParameter> callableParameterMap = new TreeMap<>();
 
-    protected CallableStatement getCallableStatement() {
-        return this.callableStatement;
-    }
-
     public AbstractCallableStatementProxy(CallableStatement callableStatement, Connection connection, String sql) {
         super(callableStatement, connection, sql);
         this.callableStatement = callableStatement;
     }
 
-    protected TreeMap<String, PreparedParameter> getCallableParameters() {
-        return this.callableParameterMap;
-    }
-
     @Override
     protected Collection<PreparedParameter> getPreparedParameters() {
-        if (this.getCallableParameters().size() > 0) {
-            return this.getCallableParameters().values();
+        if (this.callableParameterMap.size() > 0) {
+            return this.callableParameterMap.values();
         }
         return super.getPreparedParameters();
     }
@@ -657,7 +649,7 @@ public abstract class AbstractCallableStatementProxy extends PreparedStatementPr
     }
 
     private void setUnloggableParameter(String parameterName) {
-        this.callableParameterMap.put(parameterName, PreparedParameter.Unloggable);
+        this.callableParameterMap.put(parameterName, CallableParameter.UnloggableForParameter(parameterName));
     }
 }
 

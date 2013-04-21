@@ -1,5 +1,7 @@
 package lt.nsg.jdbcglass.resultset;
 
+import lt.nsg.jdbcglass.core.Wrappable;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -8,11 +10,12 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.Map;
 
-public abstract class AbstractResultSetProxy implements ResultSet {
+public abstract class AbstractResultSetProxy extends Wrappable implements ResultSet {
     private final ResultSet resultSet;
     private final Statement originalStatement;
 
     public AbstractResultSetProxy(ResultSet resultSet, Statement originalStatement) {
+        super(resultSet);
         this.resultSet = resultSet;
         this.originalStatement = originalStatement;
     }
@@ -23,16 +26,6 @@ public abstract class AbstractResultSetProxy implements ResultSet {
 
     protected ResultSet getResultSet() {
         return this.resultSet;
-    }
-
-    @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
-        return resultSet.unwrap(iface);
-    }
-
-    @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return resultSet.isWrapperFor(iface);
     }
 
     @Override

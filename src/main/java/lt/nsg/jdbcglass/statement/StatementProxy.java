@@ -11,10 +11,16 @@ import java.sql.Statement;
 public class StatementProxy extends AbstractStatementProxy {
     private final static Logger log = LoggerFactory.getLogger(StatementProxy.class);
     private final StatementHelper statementHelper;
+    private final BatchLogger batchLogger;
 
     public StatementProxy(Statement statement, Connection connection) {
         super(statement, connection);
         this.statementHelper = new StatementHelper();
+        this.batchLogger = new BatchLogger();
+    }
+
+    protected BatchLogger getBatchLogger() {
+        return batchLogger;
     }
 
     @Override
@@ -23,7 +29,6 @@ public class StatementProxy extends AbstractStatementProxy {
         statementHelper.logSql(sql, log);
         return rows;
     }
-
 
     @Override
     public boolean execute(String sql) throws SQLException {
@@ -35,20 +40,20 @@ public class StatementProxy extends AbstractStatementProxy {
     @Override
     public void addBatch(String sql) throws SQLException {
         super.addBatch(sql);
-        statementHelper.addBatch(sql);
+        batchLogger.logAddBatch(sql);
     }
 
     @Override
     public void clearBatch() throws SQLException {
         super.clearBatch();
-        statementHelper.clearBatches();
+        batchLogger.clearBatches();
     }
 
     @Override
     public int[] executeBatch() throws SQLException {
         int[] rows = super.executeBatch();
-        statementHelper.logBatch(log);
-        statementHelper.clearBatches();
+        Batch batch = batchLogger.retrieveAndResetBatch();
+        statementHelper.logBatch(batch, log);
         return rows;
     }
 
