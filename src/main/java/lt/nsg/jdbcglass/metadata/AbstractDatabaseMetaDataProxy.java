@@ -1,15 +1,16 @@
 package lt.nsg.jdbcglass.metadata;
 
+import lt.nsg.jdbcglass.resultset.ResultSetProxy;
+import lt.nsg.jdbcglass.statement.StatementProxy;
+
 import java.sql.*;
 
 public abstract class AbstractDatabaseMetaDataProxy implements DatabaseMetaData {
     private final DatabaseMetaData databaseMetaData;
+    private final Connection connection;
 
-    protected DatabaseMetaData getDatabaseMetaData() {
-        return this.databaseMetaData;
-    }
-
-    public AbstractDatabaseMetaDataProxy(DatabaseMetaData databaseMetaData) {
+    public AbstractDatabaseMetaDataProxy(DatabaseMetaData databaseMetaData, Connection connection) {
+        this.connection = connection;
         this.databaseMetaData = databaseMetaData;
     }
 
@@ -615,87 +616,87 @@ public abstract class AbstractDatabaseMetaDataProxy implements DatabaseMetaData 
 
     @Override
     public ResultSet getProcedures(String catalog, String schemaPattern, String procedureNamePattern) throws SQLException {
-        return databaseMetaData.getProcedures(catalog, schemaPattern, procedureNamePattern);
+        return proxyResultSet(databaseMetaData.getProcedures(catalog, schemaPattern, procedureNamePattern));
     }
 
     @Override
     public ResultSet getProcedureColumns(String catalog, String schemaPattern, String procedureNamePattern, String columnNamePattern) throws SQLException {
-        return databaseMetaData.getProcedureColumns(catalog, schemaPattern, procedureNamePattern, columnNamePattern);
+        return proxyResultSet(databaseMetaData.getProcedureColumns(catalog, schemaPattern, procedureNamePattern, columnNamePattern));
     }
 
     @Override
     public ResultSet getTables(String catalog, String schemaPattern, String tableNamePattern, String[] types) throws SQLException {
-        return databaseMetaData.getTables(catalog, schemaPattern, tableNamePattern, types);
+        return proxyResultSet(databaseMetaData.getTables(catalog, schemaPattern, tableNamePattern, types));
     }
 
     @Override
     public ResultSet getSchemas() throws SQLException {
-        return databaseMetaData.getSchemas();
+        return proxyResultSet(databaseMetaData.getSchemas());
     }
 
     @Override
     public ResultSet getCatalogs() throws SQLException {
-        return databaseMetaData.getCatalogs();
+        return proxyResultSet(databaseMetaData.getCatalogs());
     }
 
     @Override
     public ResultSet getTableTypes() throws SQLException {
-        return databaseMetaData.getTableTypes();
+        return proxyResultSet(databaseMetaData.getTableTypes());
     }
 
     @Override
     public ResultSet getColumns(String catalog, String schemaPattern, String tableNamePattern, String columnNamePattern) throws SQLException {
-        return databaseMetaData.getColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
+        return proxyResultSet(databaseMetaData.getColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern));
     }
 
     @Override
     public ResultSet getColumnPrivileges(String catalog, String schema, String table, String columnNamePattern) throws SQLException {
-        return databaseMetaData.getColumnPrivileges(catalog, schema, table, columnNamePattern);
+        return proxyResultSet(databaseMetaData.getColumnPrivileges(catalog, schema, table, columnNamePattern));
     }
 
     @Override
     public ResultSet getTablePrivileges(String catalog, String schemaPattern, String tableNamePattern) throws SQLException {
-        return databaseMetaData.getTablePrivileges(catalog, schemaPattern, tableNamePattern);
+        return proxyResultSet(databaseMetaData.getTablePrivileges(catalog, schemaPattern, tableNamePattern));
     }
 
     @Override
     public ResultSet getBestRowIdentifier(String catalog, String schema, String table, int scope, boolean nullable) throws SQLException {
-        return databaseMetaData.getBestRowIdentifier(catalog, schema, table, scope, nullable);
+        return proxyResultSet(databaseMetaData.getBestRowIdentifier(catalog, schema, table, scope, nullable));
     }
 
     @Override
     public ResultSet getVersionColumns(String catalog, String schema, String table) throws SQLException {
-        return databaseMetaData.getVersionColumns(catalog, schema, table);
+        return proxyResultSet(databaseMetaData.getVersionColumns(catalog, schema, table));
     }
 
     @Override
     public ResultSet getPrimaryKeys(String catalog, String schema, String table) throws SQLException {
-        return databaseMetaData.getPrimaryKeys(catalog, schema, table);
+        return proxyResultSet(databaseMetaData.getPrimaryKeys(catalog, schema, table));
     }
 
     @Override
     public ResultSet getImportedKeys(String catalog, String schema, String table) throws SQLException {
-        return databaseMetaData.getImportedKeys(catalog, schema, table);
+        return proxyResultSet(databaseMetaData.getImportedKeys(catalog, schema, table));
     }
 
     @Override
     public ResultSet getExportedKeys(String catalog, String schema, String table) throws SQLException {
-        return databaseMetaData.getExportedKeys(catalog, schema, table);
+        return proxyResultSet(databaseMetaData.getExportedKeys(catalog, schema, table));
     }
 
     @Override
     public ResultSet getCrossReference(String parentCatalog, String parentSchema, String parentTable, String foreignCatalog, String foreignSchema, String foreignTable) throws SQLException {
-        return databaseMetaData.getCrossReference(parentCatalog, parentSchema, parentTable, foreignCatalog, foreignSchema, foreignTable);
+        return proxyResultSet(databaseMetaData.getCrossReference(parentCatalog, parentSchema, parentTable, foreignCatalog, foreignSchema, foreignTable));
     }
 
     @Override
     public ResultSet getTypeInfo() throws SQLException {
-        return databaseMetaData.getTypeInfo();
+        return proxyResultSet(databaseMetaData.getTypeInfo());
     }
 
     @Override
     public ResultSet getIndexInfo(String catalog, String schema, String table, boolean unique, boolean approximate) throws SQLException {
-        return databaseMetaData.getIndexInfo(catalog, schema, table, unique, approximate);
+        return proxyResultSet(databaseMetaData.getIndexInfo(catalog, schema, table, unique, approximate));
     }
 
     @Override
@@ -760,11 +761,13 @@ public abstract class AbstractDatabaseMetaDataProxy implements DatabaseMetaData 
 
     @Override
     public ResultSet getUDTs(String catalog, String schemaPattern, String typeNamePattern, int[] types) throws SQLException {
-        return databaseMetaData.getUDTs(catalog, schemaPattern, typeNamePattern, types);
+        return proxyResultSet(databaseMetaData.getUDTs(catalog, schemaPattern, typeNamePattern, types));
     }
 
     @Override
-    public abstract Connection getConnection() throws SQLException;
+    public Connection getConnection() throws SQLException {
+        return this.connection;
+    }
 
     @Override
     public boolean supportsSavepoints() throws SQLException {
@@ -788,17 +791,17 @@ public abstract class AbstractDatabaseMetaDataProxy implements DatabaseMetaData 
 
     @Override
     public ResultSet getSuperTypes(String catalog, String schemaPattern, String typeNamePattern) throws SQLException {
-        return databaseMetaData.getSuperTypes(catalog, schemaPattern, typeNamePattern);
+        return proxyResultSet(databaseMetaData.getSuperTypes(catalog, schemaPattern, typeNamePattern));
     }
 
     @Override
     public ResultSet getSuperTables(String catalog, String schemaPattern, String tableNamePattern) throws SQLException {
-        return databaseMetaData.getSuperTables(catalog, schemaPattern, tableNamePattern);
+        return proxyResultSet(databaseMetaData.getSuperTables(catalog, schemaPattern, tableNamePattern));
     }
 
     @Override
     public ResultSet getAttributes(String catalog, String schemaPattern, String typeNamePattern, String attributeNamePattern) throws SQLException {
-        return databaseMetaData.getAttributes(catalog, schemaPattern, typeNamePattern, attributeNamePattern);
+        return proxyResultSet(databaseMetaData.getAttributes(catalog, schemaPattern, typeNamePattern, attributeNamePattern));
     }
 
     @Override
@@ -853,7 +856,7 @@ public abstract class AbstractDatabaseMetaDataProxy implements DatabaseMetaData 
 
     @Override
     public ResultSet getSchemas(String catalog, String schemaPattern) throws SQLException {
-        return databaseMetaData.getSchemas(catalog, schemaPattern);
+        return proxyResultSet(databaseMetaData.getSchemas(catalog, schemaPattern));
     }
 
     @Override
@@ -868,27 +871,31 @@ public abstract class AbstractDatabaseMetaDataProxy implements DatabaseMetaData 
 
     @Override
     public ResultSet getClientInfoProperties() throws SQLException {
-        return databaseMetaData.getClientInfoProperties();
+        return proxyResultSet(databaseMetaData.getClientInfoProperties());
     }
 
     @Override
     public ResultSet getFunctions(String catalog, String schemaPattern, String functionNamePattern) throws SQLException {
-        return databaseMetaData.getFunctions(catalog, schemaPattern, functionNamePattern);
+        return proxyResultSet(databaseMetaData.getFunctions(catalog, schemaPattern, functionNamePattern));
     }
 
     @Override
     public ResultSet getFunctionColumns(String catalog, String schemaPattern, String functionNamePattern, String columnNamePattern) throws SQLException {
-        return databaseMetaData.getFunctionColumns(catalog, schemaPattern, functionNamePattern, columnNamePattern);
+        return proxyResultSet(databaseMetaData.getFunctionColumns(catalog, schemaPattern, functionNamePattern, columnNamePattern));
     }
 
     @Override
     public ResultSet getPseudoColumns(String catalog, String schemaPattern, String tableNamePattern, String columnNamePattern) throws SQLException {
-        return databaseMetaData.getPseudoColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
+        return proxyResultSet(databaseMetaData.getPseudoColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern));
     }
 
     @Override
     public boolean generatedKeyAlwaysReturned() throws SQLException {
         return databaseMetaData.generatedKeyAlwaysReturned();
+    }
+
+    protected ResultSet proxyResultSet(ResultSet resultSet) throws SQLException {
+        return new ResultSetProxy(resultSet, new StatementProxy(resultSet.getStatement(), this.connection));
     }
 }
 

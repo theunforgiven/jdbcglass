@@ -11,9 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 public class ProxyFactory {
-    private final ConnectionProxy connectionProxy;
+    private final AbstractConnectionProxy connectionProxy;
 
-    public ProxyFactory(ConnectionProxy connectionProxy) {
+    public ProxyFactory(AbstractConnectionProxy connectionProxy) {
         this.connectionProxy = connectionProxy;
     }
 

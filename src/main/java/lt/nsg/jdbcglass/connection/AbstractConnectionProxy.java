@@ -7,13 +7,11 @@ import java.util.concurrent.Executor;
 
 public abstract class AbstractConnectionProxy implements Connection {
     private final Connection connection;
-
-    protected Connection getConnection() {
-        return this.connection;
-    }
+    private final ProxyFactory proxyFactory;
 
     public AbstractConnectionProxy(Connection connection) {
         this.connection = connection;
+        this.proxyFactory = new ProxyFactory(this);
     }
 
     @Override
@@ -27,13 +25,9 @@ public abstract class AbstractConnectionProxy implements Connection {
     }
 
     @Override
-    public abstract Statement createStatement() throws SQLException;
-
-    @Override
-    public abstract PreparedStatement prepareStatement(String sql) throws SQLException;
-
-    @Override
-    public abstract CallableStatement prepareCall(String sql) throws SQLException;
+    public Statement createStatement() throws SQLException {
+        return this.proxyFactory.proxyStatement(this.connection.createStatement());
+    }
 
     @Override
     public String nativeSQL(String sql) throws SQLException {
@@ -41,29 +35,34 @@ public abstract class AbstractConnectionProxy implements Connection {
     }
 
     @Override
-    public abstract void setAutoCommit(boolean autoCommit) throws SQLException;
-
-    @Override
-    public boolean getAutoCommit() throws SQLException {
-        return getConnection().getAutoCommit();
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
+        this.connection.setAutoCommit(autoCommit);
     }
 
     @Override
-    public abstract void commit() throws SQLException;
+    public boolean getAutoCommit() throws SQLException {
+        return this.connection.getAutoCommit();
+    }
 
     @Override
-    public abstract void rollback() throws SQLException;
+    public void commit() throws SQLException {
+        this.connection.commit();
+    }
 
     @Override
-    public abstract void close() throws SQLException;
+    public void rollback() throws SQLException {
+        this.connection.rollback();
+    }
+
+    @Override
+    public void close() throws SQLException {
+        this.connection.close();
+    }
 
     @Override
     public boolean isClosed() throws SQLException {
         return connection.isClosed();
     }
-
-    @Override
-    public abstract DatabaseMetaData getMetaData() throws SQLException;
 
     @Override
     public void setReadOnly(boolean readOnly) throws SQLException {
@@ -106,13 +105,16 @@ public abstract class AbstractConnectionProxy implements Connection {
     }
 
     @Override
-    public abstract Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException;
+    public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+        Statement statement = this.connection.createStatement(resultSetType, resultSetConcurrency);
+        return this.proxyFactory.proxyStatement(statement);
+    }
 
     @Override
-    public abstract PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException;
-
-    @Override
-    public abstract CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException;
+    public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        Statement statement = this.connection.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
+        return this.proxyFactory.proxyStatement(statement);
+    }
 
     @Override
     public Map<String, Class<?>> getTypeMap() throws SQLException {
@@ -145,7 +147,9 @@ public abstract class AbstractConnectionProxy implements Connection {
     }
 
     @Override
-    public abstract void rollback(Savepoint savepoint) throws SQLException;
+    public void rollback(Savepoint savepoint) throws SQLException {
+        this.connection.rollback(savepoint);
+    }
 
     @Override
     public void releaseSavepoint(Savepoint savepoint) throws SQLException {
@@ -153,22 +157,63 @@ public abstract class AbstractConnectionProxy implements Connection {
     }
 
     @Override
-    public abstract Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException;
+    public DatabaseMetaData getMetaData() throws SQLException {
+        return this.proxyFactory.proxyDatabaseMetaData(this.connection.getMetaData());
+    }
 
     @Override
-    public abstract PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException;
+    public CallableStatement prepareCall(String sql) throws SQLException {
+        CallableStatement statement = this.connection.prepareCall(sql);
+        return this.proxyFactory.proxyCallableStatement(statement, sql);
+    }
 
     @Override
-    public abstract CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException;
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        CallableStatement statement = this.connection.prepareCall(sql, resultSetType, resultSetConcurrency);
+        return this.proxyFactory.proxyCallableStatement(statement, sql);
+    }
 
     @Override
-    public abstract PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException;
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        CallableStatement statement = this.connection.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
+        return this.proxyFactory.proxyCallableStatement(statement, sql);
+    }
 
     @Override
-    public abstract PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException;
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement(sql);
+        return this.proxyFactory.proxyPreparedStatement(statement, sql);
+    }
 
     @Override
-    public abstract PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException;
+    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
+        return this.proxyFactory.proxyPreparedStatement(statement, sql);
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
+        return this.proxyFactory.proxyPreparedStatement(statement, sql);
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement(sql, autoGeneratedKeys);
+        return this.proxyFactory.proxyPreparedStatement(statement, sql);
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement(sql, columnIndexes);
+        return this.proxyFactory.proxyPreparedStatement(statement, sql);
+    }
+
+    @Override
+    public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement(sql, columnNames);
+        return this.proxyFactory.proxyPreparedStatement(statement, sql);
+    }
 
     @Override
     public Clob createClob() throws SQLException {
