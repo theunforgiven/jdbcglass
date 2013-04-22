@@ -4,11 +4,12 @@ package lt.nsg.jdbcglass.statement.parameter;
 import lt.nsg.jdbcglass.FormatableValue;
 
 public class PreparedParameter extends FormatableValue {
-    public static final PreparedParameter Unloggable = new PreparedParameter("Unloggable");
+    protected static final String UnloggableParameterValue = "Unloggable";
+    public static final PreparedParameter Unloggable = new PreparedParameter(UnloggableParameterValue);
 
     private final String parameterValue;
 
-    public PreparedParameter(Object parameterValue) {
+    protected PreparedParameter(Object parameterValue) {
         this.parameterValue = parameterValue.toString();
     }
 
@@ -19,5 +20,9 @@ public class PreparedParameter extends FormatableValue {
 
     public String interpolateString(String sql) {
         return sql.replaceFirst("\\?", this.getFormattedStringValue());
+    }
+
+    public static PreparedParameter ForParameter(Object parameterValue) {
+        return new PreparedParameter(parameterValue.toString());
     }
 }

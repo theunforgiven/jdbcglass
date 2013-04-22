@@ -3,13 +3,8 @@ package lt.nsg.jdbcglass.statement.parameter;
 public class CallableParameter extends PreparedParameter {
     private final String parameterName;
 
-    public CallableParameter(String parameterName, Object parameterValue) {
+    protected CallableParameter(String parameterName, String parameterValue) {
         super(parameterValue);
-        this.parameterName = parameterName;
-    }
-
-    public CallableParameter(String parameterName) {
-        super("Unloggable");
         this.parameterName = parameterName;
     }
 
@@ -20,6 +15,10 @@ public class CallableParameter extends PreparedParameter {
     }
 
     public static CallableParameter UnloggableForParameter(String parameterName) {
-        return new CallableParameter(parameterName);
+        return new CallableParameter(parameterName, UnloggableParameterValue);
+    }
+
+    public static CallableParameter ForParameter(String parameterName, Object parameterValue) {
+        return new CallableParameter(parameterName, parameterValue.toString());
     }
 }

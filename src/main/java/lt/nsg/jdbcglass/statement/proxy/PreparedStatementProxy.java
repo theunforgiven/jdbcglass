@@ -354,7 +354,7 @@ public abstract class PreparedStatementProxy extends LoggingStatementProxy imple
     }
 
     private void setParameter(int parameterIndex, Object parameterValue) {
-        this.preparedParameterMap.put(parameterIndex, new PreparedParameter(parameterValue));
+        this.preparedParameterMap.put(parameterIndex, PreparedParameter.ForParameter(parameterValue.toString()));
     }
 
     private void setUnloggableParameter(int parameterIndex) {

@@ -649,7 +649,7 @@ public abstract class CallableStatementProxy extends LoggingPreparedStatementPro
     }
 
     private void setParameter(String parameterName, Object parameterValue) {
-        this.callableParameterMap.put(parameterName, new CallableParameter(parameterName, parameterValue));
+        this.callableParameterMap.put(parameterName, CallableParameter.ForParameter(parameterName, parameterValue));
     }
 
     private void setUnloggableParameter(String parameterName) {
