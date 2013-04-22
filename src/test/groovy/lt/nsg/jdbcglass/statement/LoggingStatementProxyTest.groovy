@@ -1,16 +1,16 @@
 package lt.nsg.jdbcglass.statement
 
 import lt.nsg.jdbcglass.LogbackCapturingSpecification
-import lt.nsg.jdbcglass.resultset.ResultSetProxy
+import lt.nsg.jdbcglass.resultset.LoggingResultSetProxy
 
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
 
-public class StatementProxyTest extends LogbackCapturingSpecification {
+public class LoggingStatementProxyTest extends LogbackCapturingSpecification {
     def conn = Mock(Connection)
     def statement = Mock(Statement)
-    def proxied = new StatementProxy(statement, conn)
+    def proxied = new LoggingStatementProxy(statement, conn)
 
     def "can log a statement execute query call"() {
         given:
@@ -115,7 +115,7 @@ public class StatementProxyTest extends LogbackCapturingSpecification {
 
         then:
         logOutput.size() == 1
-        returnedResultSet instanceof ResultSetProxy
+        returnedResultSet instanceof LoggingResultSetProxy
         returnedResultSet.statement.is(proxied)
         proxied.resultSet.is(returnedResultSet)
     }

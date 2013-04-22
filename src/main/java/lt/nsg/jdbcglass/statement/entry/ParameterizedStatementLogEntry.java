@@ -1,11 +1,13 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.entry;
+
+import lt.nsg.jdbcglass.statement.parameter.PreparedParameter;
 
 import java.util.Collection;
 
-public class ParameterizedLogStatementEntry extends LogStatementEntry {
+public class ParameterizedStatementLogEntry extends StatementLogEntry {
     private final String formattedSql;
 
-    public ParameterizedLogStatementEntry(String sql, Collection<PreparedParameter> parameters) {
+    public ParameterizedStatementLogEntry(String sql, Collection<PreparedParameter> parameters) {
         super("");
         this.formattedSql = formatSql(sql, parameters);
     }

@@ -2,9 +2,9 @@ package lt.nsg.jdbcglass.connection;
 
 import org.slf4j.Logger;
 
-public class ConnectionHelper {
+public class ConnectionLogger {
 
-    public ConnectionHelper() {
+    public ConnectionLogger() {
     }
 
     void logAutoCommitChanged(Logger log, boolean autoCommit) {

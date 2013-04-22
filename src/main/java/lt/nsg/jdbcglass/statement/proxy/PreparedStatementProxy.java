@@ -1,4 +1,7 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.proxy;
+
+import lt.nsg.jdbcglass.statement.LoggingStatementProxy;
+import lt.nsg.jdbcglass.statement.parameter.PreparedParameter;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -9,12 +12,12 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.TreeMap;
 
-public abstract class AbstractPreparedStatementProxy extends StatementProxy implements PreparedStatement {
+public abstract class PreparedStatementProxy extends LoggingStatementProxy implements PreparedStatement {
     private final PreparedStatement preparedStatement;
     private final String sql;
     private final TreeMap<Integer, PreparedParameter> preparedParameterMap = new TreeMap<>();
 
-    public AbstractPreparedStatementProxy(PreparedStatement preparedStatement, Connection connection, String sql) {
+    public PreparedStatementProxy(PreparedStatement preparedStatement, Connection connection, String sql) {
         super(preparedStatement, connection);
         this.preparedStatement = preparedStatement;
         this.sql = sql;

@@ -1,13 +1,13 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.proxy;
 
-import lt.nsg.jdbcglass.resultset.ResultSetProxy;
+import lt.nsg.jdbcglass.resultset.LoggingResultSetProxy;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class ResultSetCache {
     private final Statement statement;
-    private ResultSetProxy currentResultSet;
+    private LoggingResultSetProxy currentResultSet;
 
     public ResultSetCache(Statement statement) {
         this.statement = statement;
@@ -23,8 +23,8 @@ public class ResultSetCache {
         return this.currentResultSet;
     }
 
-    ResultSetProxy proxyResultSet(ResultSet resultSet) {
-        return new ResultSetProxy(resultSet, statement);
+    LoggingResultSetProxy proxyResultSet(ResultSet resultSet) {
+        return new LoggingResultSetProxy(resultSet, statement);
     }
 
     private boolean currentResultIsTargetProxyOf(ResultSet resultSet) {

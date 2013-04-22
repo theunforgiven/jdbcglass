@@ -1,4 +1,8 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.proxy;
+
+import lt.nsg.jdbcglass.statement.LoggingPreparedStatementProxy;
+import lt.nsg.jdbcglass.statement.parameter.CallableParameter;
+import lt.nsg.jdbcglass.statement.parameter.PreparedParameter;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -10,11 +14,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class AbstractCallableStatementProxy extends PreparedStatementProxy implements CallableStatement {
+public abstract class CallableStatementProxy extends LoggingPreparedStatementProxy implements CallableStatement {
     private final CallableStatement callableStatement;
     private final TreeMap<String, PreparedParameter> callableParameterMap = new TreeMap<>();
 
-    public AbstractCallableStatementProxy(CallableStatement callableStatement, Connection connection, String sql) {
+    public CallableStatementProxy(CallableStatement callableStatement, Connection connection, String sql) {
         super(callableStatement, connection, sql);
         this.callableStatement = callableStatement;
     }

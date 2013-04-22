@@ -1,20 +1,20 @@
 package lt.nsg.jdbcglass.statement
 
 import lt.nsg.jdbcglass.LogbackCapturingSpecification
-import lt.nsg.jdbcglass.resultset.ResultSetProxy
+import lt.nsg.jdbcglass.resultset.LoggingResultSetProxy
 import spock.lang.Subject
 
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
-class PreparedStatementProxyTest extends LogbackCapturingSpecification {
+class LoggingPreparedStatementProxyTest extends LogbackCapturingSpecification {
     private static final String PREPARED_SQL = "SQL"
     private Connection connection = Mock(Connection)
     private PreparedStatement preparedStatement = Mock(PreparedStatement)
 
     @Subject
-    def proxied = new PreparedStatementProxy(preparedStatement, connection, PREPARED_SQL)
+    def proxied = new LoggingPreparedStatementProxy(preparedStatement, connection, PREPARED_SQL)
 
     def "proxies a result set"() {
         given:
@@ -26,7 +26,7 @@ class PreparedStatementProxyTest extends LogbackCapturingSpecification {
         def returnedResultSet = proxied.executeQuery()
 
         then:
-        returnedResultSet instanceof ResultSetProxy
+        returnedResultSet instanceof LoggingResultSetProxy
         returnedResultSet.statement.is(proxied)
         proxied.resultSet.is(returnedResultSet)
     }
@@ -102,7 +102,7 @@ class PreparedStatementProxyTest extends LogbackCapturingSpecification {
         def foo = "a"
         def bar = "b"
         def sql = """SELECT * FROM WOOT WHERE FOO = ? AND BAR = ?"""
-        proxied = new PreparedStatementProxy(preparedStatement, connection, sql)
+        proxied = new LoggingPreparedStatementProxy(preparedStatement, connection, sql)
 
         when:
         proxied.setString(1, foo)

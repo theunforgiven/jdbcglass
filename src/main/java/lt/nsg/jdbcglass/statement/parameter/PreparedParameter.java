@@ -1,4 +1,4 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.parameter;
 
 
 import lt.nsg.jdbcglass.FormatableValue;

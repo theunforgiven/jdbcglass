@@ -1,8 +1,8 @@
 package lt.nsg.jdbcglass.metadata;
 
 import lt.nsg.jdbcglass.core.Wrappable;
-import lt.nsg.jdbcglass.resultset.ResultSetProxy;
-import lt.nsg.jdbcglass.statement.StatementProxy;
+import lt.nsg.jdbcglass.resultset.LoggingResultSetProxy;
+import lt.nsg.jdbcglass.statement.LoggingStatementProxy;
 
 import java.sql.*;
 
@@ -887,7 +887,7 @@ public abstract class AbstractDatabaseMetaDataProxy extends Wrappable implements
     }
 
     protected ResultSet proxyResultSet(ResultSet resultSet) throws SQLException {
-        return new ResultSetProxy(resultSet, new StatementProxy(resultSet.getStatement(), this.connection));
+        return new LoggingResultSetProxy(resultSet, new LoggingStatementProxy(resultSet.getStatement(), this.connection));
     }
 }
 

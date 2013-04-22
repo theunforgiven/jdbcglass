@@ -1,9 +1,9 @@
 package lt.nsg.jdbcglass.connection;
 
 import lt.nsg.jdbcglass.metadata.DatabaseMetaDataProxy;
-import lt.nsg.jdbcglass.statement.CallableStatementProxy;
-import lt.nsg.jdbcglass.statement.PreparedStatementProxy;
-import lt.nsg.jdbcglass.statement.StatementProxy;
+import lt.nsg.jdbcglass.statement.LoggingCallableStatementProxy;
+import lt.nsg.jdbcglass.statement.LoggingPreparedStatementProxy;
+import lt.nsg.jdbcglass.statement.LoggingStatementProxy;
 
 import java.sql.CallableStatement;
 import java.sql.DatabaseMetaData;
@@ -18,15 +18,15 @@ public class ProxyFactory {
     }
 
     public CallableStatement proxyCallableStatement(CallableStatement statement, String sql) {
-        return new CallableStatementProxy(statement, connectionProxy, sql);
+        return new LoggingCallableStatementProxy(statement, connectionProxy, sql);
     }
 
     public PreparedStatement proxyPreparedStatement(PreparedStatement statement, String sql) {
-        return new PreparedStatementProxy(statement, connectionProxy, sql);
+        return new LoggingPreparedStatementProxy(statement, connectionProxy, sql);
     }
 
     public Statement proxyStatement(Statement statement) {
-        return new StatementProxy(statement, connectionProxy);
+        return new LoggingStatementProxy(statement, connectionProxy);
     }
 
     public DatabaseMetaData proxyDatabaseMetaData(DatabaseMetaData metaData) {

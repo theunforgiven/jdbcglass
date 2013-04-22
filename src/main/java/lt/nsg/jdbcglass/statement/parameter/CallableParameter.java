@@ -1,4 +1,4 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.parameter;
 
 public class CallableParameter extends PreparedParameter {
     private final String parameterName;

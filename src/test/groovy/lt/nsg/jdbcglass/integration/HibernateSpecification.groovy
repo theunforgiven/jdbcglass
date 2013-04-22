@@ -1,6 +1,6 @@
 package lt.nsg.jdbcglass.integration
 
-import lt.nsg.jdbcglass.connection.ConnectionProxy
+import lt.nsg.jdbcglass.connection.LoggingConnectionProxy
 import lt.nsg.jdbcglass.integration.entities.ChildEntity
 import lt.nsg.jdbcglass.integration.entities.ParentEntity
 import org.h2.jdbc.JdbcConnection
@@ -82,7 +82,7 @@ class HibernateSpecification extends Specification {
 
     private Session getSession() {
         def h2Connection = new JdbcConnection("jdbc:h2:mem:test", new Properties())
-        def connection = new ConnectionProxy(h2Connection)
+        def connection = new LoggingConnectionProxy(h2Connection)
         new SchemaExport(configuration, connection).execute(false, true, false, true)
         sessionFactory.withOptions()
                       .connection(connection)

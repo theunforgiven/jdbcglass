@@ -5,11 +5,11 @@ import spock.lang.Subject
 
 import java.sql.*
 
-class ConnectionProxyTest extends LogbackCapturingSpecification {
+class LoggingConnectionProxyTest extends LogbackCapturingSpecification {
     private Connection connection = Mock(Connection)
 
     @Subject
-    ConnectionProxy proxied
+    LoggingConnectionProxy proxied
 
     def setup() {
         proxied = proxyConnection(connection)
@@ -181,7 +181,7 @@ class ConnectionProxyTest extends LogbackCapturingSpecification {
         logOutput.first() == "Transaction committed"
     }
 
-    private static ConnectionProxy proxyConnection(Connection connection) {
-        new ConnectionProxy(connection)
+    private static LoggingConnectionProxy proxyConnection(Connection connection) {
+        new LoggingConnectionProxy(connection)
     }
 }

@@ -1,15 +1,15 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.proxy;
 
 import lt.nsg.jdbcglass.core.Wrappable;
 
 import java.sql.*;
 
-public abstract class AbstractStatementProxy extends Wrappable implements Statement {
+public abstract class StatementProxy extends Wrappable implements Statement {
     private final Statement statement;
     private final Connection connection;
     private final ResultSetCache resultSetCache;
 
-    protected AbstractStatementProxy(Statement statement, Connection connection) {
+    protected StatementProxy(Statement statement, Connection connection) {
         super(statement);
         this.statement = statement;
         this.connection = connection;

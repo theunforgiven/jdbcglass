@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ResultSetProxy extends AbstractResultSetProxy {
-    private final Logger log = LoggerFactory.getLogger(ResultSetProxy.class);
-    private final ResultSetHelper resultSetHelper = new ResultSetHelper();
+public class LoggingResultSetProxy extends AbstractResultSetProxy {
+    private final Logger log = LoggerFactory.getLogger(LoggingResultSetProxy.class);
+    private final ResultSetLogger resultSetLogger = new ResultSetLogger();
 
-    public ResultSetProxy(ResultSet resultSet, Statement originalStatement) {
+    public LoggingResultSetProxy(ResultSet resultSet, Statement originalStatement) {
         super(resultSet, originalStatement);
     }
 
@@ -19,7 +19,7 @@ public class ResultSetProxy extends AbstractResultSetProxy {
     public boolean next() throws SQLException {
         final boolean hasNextRow = super.next();
         if (hasNextRow) {
-            this.resultSetHelper.logResultSetRow(log, this.getResultSet());
+            this.resultSetLogger.logResultSetRow(log, this.getResultSet());
         }
         return hasNextRow;
     }

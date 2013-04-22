@@ -1,9 +1,9 @@
-package lt.nsg.jdbcglass.statement;
+package lt.nsg.jdbcglass.statement.entry;
 
-public class LogStatementEntry {
+public class StatementLogEntry {
     private final String formattedSql;
 
-    public LogStatementEntry(String sql) {
+    public StatementLogEntry(String sql) {
         this.formattedSql = sql;
     }
 

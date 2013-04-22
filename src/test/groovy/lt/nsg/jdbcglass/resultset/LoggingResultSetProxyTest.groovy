@@ -6,11 +6,11 @@ import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 
-public class ResultSetProxyTest extends LogbackCapturingSpecification {
+public class LoggingResultSetProxyTest extends LogbackCapturingSpecification {
     private ResultSet resultSet = Mock(ResultSet)
     private Statement statement = Mock(Statement)
 
-    def proxied = new ResultSetProxy(resultSet, statement)
+    def proxied = new LoggingResultSetProxy(resultSet, statement)
 
     def "should proxy the statement"() {
         expect:

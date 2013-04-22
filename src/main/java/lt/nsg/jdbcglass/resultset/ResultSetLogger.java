@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultSetHelper {
+public class ResultSetLogger {
     public void logResultSetRow(Logger log, ResultSet resultSet) throws SQLException {
         final List<ResultSetColumn> columns = getResultSetColumns(resultSet);
         final String message = createLogMessage(columns);
