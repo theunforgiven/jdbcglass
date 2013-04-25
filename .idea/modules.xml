@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Jdbc Glass.iml" filepath="$PROJECT_DIR$/Jdbc Glass.iml" />
       <module fileurl="file://$PROJECT_DIR$/jdbcglass-core/jdbcglass-core.iml" filepath="$PROJECT_DIR$/jdbcglass-core/jdbcglass-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jdbcglass-spring/jdbcglass-spring.iml" filepath="$PROJECT_DIR$/jdbcglass-spring/jdbcglass-spring.iml" />
     </modules>
   </component>
 </project>
