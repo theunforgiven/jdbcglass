@@ -22,9 +22,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Jdbc Glass" />
+        <module name="jdbcglass-core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Jdbc Glass" target="1.7" />
+      <module name="jdbcglass-core" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
