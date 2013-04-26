@@ -10,10 +10,10 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
-public class ProxyFactory {
+public class LoggingProxyFactory {
     private final AbstractConnectionProxy connectionProxy;
 
-    public ProxyFactory(AbstractConnectionProxy connectionProxy) {
+    public LoggingProxyFactory(AbstractConnectionProxy connectionProxy) {
         this.connectionProxy = connectionProxy;
     }
 

@@ -5,14 +5,11 @@
     <option name="CUSTOM_SCOPE_NAME" value="Project Production Files" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01e6f112-e7fe-4daf-aa1a-871ede843521" name="Default" comment="create new project, extract logger out into parameter, create default constructor, use mock in test instead of the hacky log capturing">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jdbcglass-spring/pom.xml" />
-      <change type="MOVED" beforePath="C:\dev\src\jdbcglass\Jdbc Glass.iml" afterPath="$PROJECT_DIR$/jdbcglass-spring/jdbcglass-spring.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jdbcglass-core/pom.xml" afterPath="$PROJECT_DIR$/jdbcglass-core/pom.xml" />
+    <list default="true" id="01e6f112-e7fe-4daf-aa1a-871ede843521" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/ConnectionProxyFactory.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/LoggingConnectionProxyFactory.java" />
+      <change type="MOVED" beforePath="C:\dev\src\jdbcglass\jdbcglass-core\src\main\java\lt\nsg\jdbcglass\connection\ProxyFactory.java" afterPath="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/LoggingProxyFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/AbstractConnectionProxy.java" afterPath="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/AbstractConnectionProxy.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Jdbc Glass.iws" />
@@ -20,11 +17,11 @@
     <file path="$PROJECT_DIR$/../jdbcdslog/.idea/workspace.xml" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366383222745" ignored="false" />
     <file path="/pom.xml" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366915492912" ignored="false" />
     <file path="/TestSpec.groovy" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366383119092" ignored="false" />
-    <file path="/Dummy.txt" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366915763890" ignored="false" />
-    <file path="/a.dummy" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366910024993" ignored="false" />
+    <file path="/Dummy.txt" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366984292747" ignored="false" />
+    <file path="/a.dummy" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366917625394" ignored="false" />
     <file path="/File Header.txt.ft" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366382952116" ignored="false" />
     <file path="/TestClass.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366383024500" ignored="false" />
-    <file path="/fragment.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366910019785" ignored="false" />
+    <file path="/fragment.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366917815108" ignored="false" />
     <file path="/TestTest.groovy" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366394082873" ignored="false" />
     <file path="/LogbackCapturingSpecification.groovy" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366910691642" ignored="false" />
     <file path="/LogbackCapturingSpecificationTest.groovy" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366390387199" ignored="false" />
@@ -89,6 +86,9 @@
     <file path="/LoggingConnectionProxy.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366910374513" ignored="false" />
     <file path="/LoggingResultSetProxyTest.groovy" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366910513354" ignored="false" />
     <file path="/LoggingResultSetProxy.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366910586545" ignored="false" />
+    <file path="/AbstractDatasourceProxy.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366916397425" ignored="false" />
+    <file path="/Driver.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366923769519" ignored="false" />
+    <file path="/ConnectionProxyFactory.java" changelist="01e6f112-e7fe-4daf-aa1a-871ede843521" time="1366917847217" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,29 +248,53 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jdbcglass-spring/pom.xml">
+      <file leaf-file-name="AbstractConnectionProxy.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/AbstractConnectionProxy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="51" selection-start="682" selection-end="682" vertical-scroll-proportion="0.0">
+            <state line="9" column="22" selection-start="210" selection-end="210" vertical-scroll-proportion="0.22522523">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="SQLFeatureNotSupportedException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/SQLFeatureNotSupportedException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="37" selection-start="2051" selection-end="2051" vertical-scroll-proportion="1.4586331">
+            <state line="42" column="61" selection-start="853" selection-end="853" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#6701#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SQLNonTransientException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/SQLNonTransientException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="61" selection-start="509" selection-end="509" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#6299#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SQLException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/SQLException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="45" selection-start="1485" selection-end="1485" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jdbcglass-core/pom.xml">
+      <file leaf-file-name="Exception.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/lang/Exception.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="541" selection-end="541" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="44" column="13" selection-start="925" selection-end="925" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#4059#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -293,13 +317,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/statement/LoggingStatementProxyTest.groovy" />
-        <option value="$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/statement/LoggingCallableStatementProxyTest.groovy" />
-        <option value="$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/statement/LoggingPreparedStatementProxyTest.groovy" />
-        <option value="$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/connection/LoggingConnectionProxyTest.groovy" />
-        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/LoggingConnectionProxy.java" />
-        <option value="$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/resultset/LoggingResultSetProxyTest.groovy" />
-        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/resultset/AbstractResultSetProxy.java" />
         <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/resultset/LoggingResultSetProxy.java" />
         <option value="$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/LogbackCapturingSpecification.groovy" />
         <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/log/StatementLogWriter.java" />
@@ -309,6 +326,13 @@
         <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/log/Batch.java" />
         <option value="$PROJECT_DIR$/jdbcglass-core/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/AbstractDatasourceProxy.java" />
+        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/AbstractDataSourceProxy.java" />
+        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/ConnectionProxyFactory.java" />
+        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/ProxyFactory.java" />
+        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/LoggingProxyFactory.java" />
+        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/LoggingConnectionProxyFactory.java" />
+        <option value="$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/Driver.java" />
       </list>
     </option>
   </component>
@@ -514,6 +538,20 @@
               <option name="myItemId" value="Jdbc Glass" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: com.h2database:h2:1.3.171" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -531,7 +569,161 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass-spring" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass-spring" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass-spring" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="jdbcglass-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Jdbc Glass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jdbcglass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="connection" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -566,32 +758,34 @@
     <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="spock.lang.Specification" />
-    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="lt.nsg.jdbcglass.resultset" />
       <recent name="lt.nsg.jdbcglass.statement" />
       <recent name="lt.nsg.jdbcglass" />
     </key>
-    <key name="ExtractSuperBase.RECENT_KEYS">
-      <recent name="lt.nsg.jdbcglass.statement" />
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="spock.lang.Specification" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="lt.nsg.jdbcglass.connection" />
       <recent name="lt.nsg.jdbcglass.statement" />
-      <recent name="lt.nsg.jdbcglass.resultset" />
-      <recent name="lt.nsg.jdbcglass" />
     </key>
     <key name="GrIntroduceConstantDialog.RECENTS_KEY">
       <recent name="lt.nsg.jdbcglass.statement.PreparedStatementProxyTest" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\dev\src\jdbcglass\jdbcglass-core" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="lt.nsg.jdbcglass.connection" />
+      <recent name="lt.nsg.jdbcglass.statement" />
+      <recent name="lt.nsg.jdbcglass.resultset" />
+      <recent name="lt.nsg.jdbcglass" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="lt.nsg.jdbcglass" />
       <recent name="lt.nsg.jdbcglass.statement" />
       <recent name="lt.nsg.jdbcglass.connection" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\src\jdbcglass\jdbcglass-core" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.lt.nsg.jdbcglass in jdbcglass-core">
@@ -863,7 +1057,12 @@
       <Port>5050</Port>
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <changelist date="1366984293915">
+      <option name="PATH" value="C:\Users\nicholas\.IntelliJIdea12\config\shelf\driver.patch" />
+      <option name="DESCRIPTION" value="driver" />
+    </changelist>
+  </component>
   <component name="SliceManager">
     <option name="analysisUIOptions">
       <AnalysisUIOptions />
@@ -893,31 +1092,31 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33888888" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4621381" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.72939867" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924226" sideWeight="0.72939867" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997773" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.63919824" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.63919824" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4766147" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946581" sideWeight="0.5233853" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10885806" sideWeight="0.6611111" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24919957" sideWeight="0.5233853" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10885806" sideWeight="0.8685969" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.6611111" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2411953" sideWeight="0.53786194" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.8685969" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33407572" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4766147" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -964,7 +1163,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="create new project, extract logger out into parameter, create default constructor, use mock in test instead of the hacky log capturing" />
+    <option name="LAST_COMMIT_MESSAGE" value="driver" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -992,88 +1191,129 @@
     <MESSAGE value="fix constructor" />
     <MESSAGE value="update groovy" />
     <MESSAGE value="create new project, extract logger out into parameter, create default constructor, use mock in test instead of the hacky log capturing" />
+    <MESSAGE value="Create new module" />
+    <MESSAGE value="driver" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/log/StatementLogWriter.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/engine/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="16" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/LoggingPreparedStatementProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="50" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/LogbackCapturingSpecification.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="73" selection-start="578" selection-end="578" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/AbstractLoggingStatementProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="49" selection-start="682" selection-end="682" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/LoggingCallableStatementProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="236" selection-end="236" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/LoggingStatementProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="35" selection-start="765" selection-end="765" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/connection/LoggingConnectionProxyTest.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="42" selection-start="4621" selection-end="4621" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/integration/HibernateSpecification.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="8" selection-start="1980" selection-end="1980" vertical-scroll-proportion="0.04472272" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/log/BatchLogger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="18" selection-start="905" selection-end="905" vertical-scroll-proportion="0.7377622" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/statement/log/Batch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="5" selection-start="216" selection-end="216" vertical-scroll-proportion="0.30594406" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/test/groovy/lt/nsg/jdbcglass/statement/LoggingStatementProxyTest.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/jdbcglass-core.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-core/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="541" selection-end="541" vertical-scroll-proportion="0.0">
+        <state line="86" column="28" selection-start="2236" selection-end="2236" vertical-scroll-proportion="0.3325688">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jdbcglass-spring/pom.xml">
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/DriverManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="51" selection-start="682" selection-end="682" vertical-scroll-proportion="0.0">
+        <state line="78" column="13" selection-start="2682" selection-end="2682" vertical-scroll-proportion="-13.759022">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/Driver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="37" selection-start="2051" selection-end="2051" vertical-scroll-proportion="1.4586331">
+        <state line="30" column="31" selection-start="928" selection-end="928" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/Driver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="116" column="25" selection-start="4092" selection-end="4092" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/upgrade/DbUpgrade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="13" selection-start="786" selection-end="786" vertical-scroll-proportion="-2.5126147">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/fulltext/FullTextLucene.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="288" column="33" selection-start="11508" selection-end="11508" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/constraint/ConstraintCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="793" selection-end="793" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#4149#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/constraint/ConstraintUnique.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="0" selection-start="2351" selection-end="2400" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#4258#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/constraint/Constraint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="28" selection-start="2778" selection-end="2778" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#5068#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/h2database/h2/1.3.171/h2-1.3.171-sources.jar!/org/h2/constant/ErrorCode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="13" selection-start="895" selection-end="895" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/SQLFeatureNotSupportedException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="61" selection-start="853" selection-end="853" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#6701#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/SQLNonTransientException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="61" selection-start="509" selection-end="509" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#6299#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/sql/SQLException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="45" selection-start="1485" selection-end="1485" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_17/src.zip!/java/lang/Exception.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="13" selection-start="925" selection-end="925" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#4059#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jdbcglass-core/src/main/java/lt/nsg/jdbcglass/connection/AbstractConnectionProxy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="22" selection-start="210" selection-end="210" vertical-scroll-proportion="0.22522523">
           <folding />
         </state>
       </provider>
