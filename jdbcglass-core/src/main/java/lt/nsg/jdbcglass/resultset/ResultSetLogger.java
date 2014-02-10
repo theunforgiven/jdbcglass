@@ -33,9 +33,16 @@ public class ResultSetLogger {
         final int columnCount = md.getColumnCount();
         final ArrayList<ResultSetColumn> columns = new ArrayList<>();
         for (int i = 1; i <= columnCount; i++) {
-            final String column = resultSet.getObject(i).toString();
+            final String column = safeToString(resultSet.getObject(i));
             columns.add(new ResultSetColumn(column));
         }
         return columns;
+    }
+
+    private static String safeToString(Object o) throws SQLException {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString();
     }
 }
