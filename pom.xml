@@ -14,6 +14,13 @@
         <module>jdbcglass-core</module>
     </modules>
 
+    <licenses>
+        <license>
+            <name>Apache License,Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <!-- test -->
     <properties>
         <groovy-all.version>2.2.1</groovy-all.version>
         <junit.version>4.11</junit.version>
