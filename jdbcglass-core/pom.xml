@@ -9,6 +9,10 @@
     </parent>
 
     <packaging>jar</packaging>
+    <properties>
+        <hibernate.version>4.3.1.Final</hibernate.version>
+        <spock.version>0.7-groovy-2.0</spock.version>
+    </properties>
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -43,7 +47,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.2.0.Final</version>
+            <version>${hibernate.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -61,7 +65,7 @@
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
-            <version>0.7-groovy-2.0</version>
+            <version>${spock.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.codehaus.groovy</groupId>

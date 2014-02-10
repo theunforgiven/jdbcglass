@@ -23,7 +23,6 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="jdbcglass-core" />
-        <module name="jdbcglass-spring" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
