@@ -10,8 +10,8 @@ import org.hibernate.SessionFactory
 import org.hibernate.cfg.Configuration
 import org.hibernate.cfg.Environment
 import org.hibernate.dialect.H2Dialect
+import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl
 import org.hibernate.jdbc.Work
-import org.hibernate.service.jdbc.connections.internal.UserSuppliedConnectionProviderImpl
 import org.hibernate.tool.hbm2ddl.SchemaExport
 import spock.lang.Shared
 import spock.lang.Specification
