@@ -27,6 +27,8 @@
         <slf4j-api.version>1.7.6</slf4j-api.version>
         <logback-classic.version>1.1.1</logback-classic.version>
         <h2.version>1.3.175</h2.version>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <gmaven-plugin.version>1.5</gmaven-plugin.version>
     </properties>
 
     <prerequisites>
@@ -43,7 +45,7 @@
                         <source>1.7</source>
                         <target>1.7</target>
                     </configuration>
-                    <version>3.1</version>
+                    <version>${maven-compiler-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.gmaven</groupId>
@@ -59,7 +61,7 @@
                         <providerSelection>2.0</providerSelection>
                         <source/>
                     </configuration>
-                    <version>1.4</version>
+                    <version>${gmaven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
